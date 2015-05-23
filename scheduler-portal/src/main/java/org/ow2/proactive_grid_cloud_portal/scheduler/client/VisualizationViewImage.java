@@ -367,7 +367,7 @@ public class VisualizationViewImage implements VisualizationView {
         this.root.setHeight(h);
 
         // very ugly, only way to control the scroll viewport
-        final Canvas scroll = SchedulerPage.inst.visuTab.getPane().getParentElement();
+        final Canvas scroll = SchedulerPage.inst.visuTab.getPane().getParentCanvas();
 
         this.navIcon = new Canvas();
         navIcon.setPosition("absolute");
@@ -481,7 +481,7 @@ public class VisualizationViewImage implements VisualizationView {
 
     private void updateNavButtonPos(boolean init) {
         // very ugly, only way to control the scroll viewport
-        final Canvas scroll = SchedulerPage.inst.visuTab.getPane().getParentElement();
+        final Canvas scroll = SchedulerPage.inst.visuTab.getPane().getParentCanvas();
 
         int scrollTop = scroll.getScrollLeft() + scroll.getInnerContentWidth() - 34;
 

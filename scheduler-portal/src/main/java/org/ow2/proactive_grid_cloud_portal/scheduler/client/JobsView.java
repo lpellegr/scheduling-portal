@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.smartgwt.client.types.*;
 import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerListeners.JobsUpdatedListener;
 import com.smartgwt.client.data.AdvancedCriteria;
 import com.smartgwt.client.data.DSCallback;
@@ -51,10 +52,6 @@ import com.smartgwt.client.data.RecordList;
 import com.smartgwt.client.data.SortSpecifier;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
-import com.smartgwt.client.types.Alignment;
-import com.smartgwt.client.types.ListGridFieldType;
-import com.smartgwt.client.types.SortDirection;
-import com.smartgwt.client.types.TopOperatorAppearance;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Label;
@@ -384,6 +381,7 @@ public class JobsView implements JobsUpdatedListener {
         };
         this.ds = new JobDS("jobds_" + controller.getModel().getSessionId());
         this.jobsGrid.setDataSource(this.ds);
+        this.jobsGrid.setAutoFitWidthApproach(AutoFitWidthApproach.BOTH);
         this.jobsGrid.setCanGroupBy(false);
         this.jobsGrid.setCanReorderFields(false);
         this.jobsGrid.setCanPickFields(false);

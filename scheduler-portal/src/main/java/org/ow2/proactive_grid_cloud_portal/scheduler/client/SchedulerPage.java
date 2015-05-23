@@ -301,13 +301,10 @@ public class SchedulerPage implements SchedulerStatusListener, JobsUpdatedListen
             }
         });
 
-        // for some reason IE9 standards fails to detect the right width
-        if (SC.isIE()) {
-            c1.setWidth(60);
-            c2.setWidth(60);
-            c3.setWidth(60);
-            c4.setWidth(60);
-        }
+        c1.setWidth(60);
+        c2.setWidth(60);
+        c3.setWidth(60);
+        c4.setWidth(60);
 
         DynamicForm checkBoxes = new DynamicForm();
         checkBoxes.setNumCols(8);
