@@ -57,7 +57,7 @@ public class Task implements Serializable, Comparable<Task> {
     private String hostName;
     private TaskStatus status;
     private long startTime;
-    private long lastExecutionTerminationTime;
+    private long inErrorTime;
     private long finishTime;
     private long executionDuration;
     private long startAtTime;
@@ -95,7 +95,7 @@ public class Task implements Serializable, Comparable<Task> {
      * @param maxNumberOfExecOnFailure maximum number of executions on failure
      * @param numberOfExecOnFailureLeft maximum number of executions on failure left
      */
-    public Task(long id, String name, TaskStatus status, String hostName, long startTime, long lastExecutionTerminationTime,
+    public Task(long id, String name, TaskStatus status, String hostName, long startTime, long inErrorTime,
             long finishedTime, long executionDuration, String description, int nodeCount, int maxNumberOfExec,
             int numberOfExecLeft, int maxNumberOfExecOnFailure, int numberOfExecOnFailureLeft) {
 
@@ -104,7 +104,7 @@ public class Task implements Serializable, Comparable<Task> {
         this.status = status;
         this.hostName = hostName;
         this.startTime = startTime;
-        this.lastExecutionTerminationTime = lastExecutionTerminationTime;
+        this.inErrorTime = inErrorTime;
         this.finishTime = finishedTime;
         this.executionDuration = executionDuration;
         this.startAtTime = -1L;
@@ -244,12 +244,12 @@ public class Task implements Serializable, Comparable<Task> {
         return startAtTime;
     }
 
-    public long getLastExecutionTerminationTime() {
-        return lastExecutionTerminationTime;
+    public long getInErrorTime() {
+        return inErrorTime;
     }
 
-    public void setLastExecutionTerminationTime(long lastExecutionTerminationTime) {
-        this.lastExecutionTerminationTime = lastExecutionTerminationTime;
+    public void setInErrorTime(long inErrorTime) {
+        this.inErrorTime = inErrorTime;
     }
 
     public int getMaxNumberOfExec() {
@@ -368,7 +368,7 @@ public class Task implements Serializable, Comparable<Task> {
         String status = taskInfo.get("taskStatus").isString().stringValue();
         TaskStatus taskStatus = TaskStatus.valueOf(status);
         long startTime = (long) taskInfo.get("startTime").isNumber().doubleValue();
-        long lastExecutionTerminationTime = (long) taskInfo.get("lastExecutionTerminationTime").isNumber().doubleValue();
+        long inErrorTime = (long) taskInfo.get("inErrorTime").isNumber().doubleValue();
         long finishedTime = (long) taskInfo.get("finishedTime").isNumber().doubleValue();
         long executionDuration = (long) taskInfo.get("executionDuration").isNumber().doubleValue();
 
@@ -401,7 +401,7 @@ public class Task implements Serializable, Comparable<Task> {
             }
         }
 
-        Task result = new Task(id, name, taskStatus, hostName, startTime, lastExecutionTerminationTime, finishedTime,
+        Task result = new Task(id, name, taskStatus, hostName, startTime, inErrorTime, finishedTime,
                 executionDuration, description, nodes, maxExec, execLeft, maxExecOnFailure, execOnFailureLeft);
         result.setTag(tag);
         result.setJobId(jobId);
