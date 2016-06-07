@@ -35,7 +35,6 @@
 package org.ow2.proactive_grid_cloud_portal.scheduler.server;
 
 import org.junit.Test;
-import org.ow2.proactive_grid_cloud_portal.scheduler.shared.SchedulerConfig;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -66,7 +65,7 @@ public class SchedulerServiceImplTest {
     @Test
     public void testLoadingFromConfigurationFile() throws Exception {
         setUp();
-        assertEquals("test", SchedulerConfig.get().getRestUrl());
+        assertEquals("test", ((SchedulerConfig) SchedulerConfig.get()).getRestUrlFromServer(null));
     }
 
     @Test
@@ -76,7 +75,7 @@ public class SchedulerServiceImplTest {
 
         setUp();
 
-        assertEquals("unknown", SchedulerConfig.get().getRestUrl());
+        assertEquals("unknown", ((SchedulerConfig) SchedulerConfig.get()).getRestUrlFromServer(null));
         assertEquals("x.x.x", SchedulerConfig.get().getVersion());
     }
 

@@ -20,7 +20,7 @@ public class RMServiceImplTest {
     @Test
     public void rm_config_is_loaded() throws Exception {
         assertEquals("http://localhost:8080/rest",
-          RMConfig.get().getRestUrl());
+                ((org.ow2.proactive_grid_cloud_portal.rm.server.RMConfig) RMConfig.get()).getRestUrlFromServer(null));
         System.setProperty(RMConfig.VERSION, "a_version");
 
         RMServiceImpl service = new RMServiceImpl();
@@ -31,7 +31,7 @@ public class RMServiceImplTest {
 
         service.init(mockServletContext(servletContext));
 
-        assertEquals("a_test_url", RMConfig.get().getRestUrl());
+        assertEquals("a_test_url", ((org.ow2.proactive_grid_cloud_portal.rm.server.RMConfig) RMConfig.get()).getRestUrlFromServer(null));
         assertEquals("a_version", RMConfig.get().getVersion());
     }
 

@@ -36,6 +36,8 @@
  */
 package org.ow2.proactive_grid_cloud_portal.scheduler.shared;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.ow2.proactive_grid_cloud_portal.common.shared.Config;
 
 
@@ -136,16 +138,24 @@ public class SchedulerConfig extends Config {
         return "Scheduler";
     }
 
-    @Override
-    public String getRestUrl() {
+//    @Override
+    public String getRestUrlFromClient() {
         String restUrlFromProperties = properties.get(REST_URL);
+
         if (restUrlFromProperties == null) {
             String protocol = com.google.gwt.user.client.Window.Location.getProtocol();
             String port = com.google.gwt.user.client.Window.Location.getPort();
-            String restUrl = protocol + "://localhost:" + port + "/rest";
-            return restUrl;
+            String host = com.google.gwt.user.client.Window.Location.getHost();
+            return protocol + "://" + host + ":" + port + "/rest";
+        } else if (restUrlFromProperties.startsWith(".")
+                || restUrlFromProperties.startsWith("..")) {
+            String protocol = com.google.gwt.user.client.Window.Location.getProtocol();
+            String port = com.google.gwt.user.client.Window.Location.getPort();
+            String host = com.google.gwt.user.client.Window.Location.getHost();
+            return protocol + "://" + host + ":" + port + "/rest/" + restUrlFromProperties;
+        } else {
+            return restUrlFromProperties;
         }
-        return restUrlFromProperties;
     }
 
     /**

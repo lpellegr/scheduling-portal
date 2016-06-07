@@ -50,10 +50,8 @@ import com.google.gwt.i18n.shared.DefaultDateTimeFormatInfo;
  * <p>
  * Config is read from a file by a server,
  * then sent to the client and user there
- * 
- * 
- * @author mschnoor
  *
+ * @author mschnoor
  */
 public abstract class Config {
 
@@ -87,6 +85,7 @@ public abstract class Config {
     /**
      * Load a set of properties
      * This set of properties will be reset if {@link #reload()} is called
+     *
      * @param props a set of key/value pairs
      */
     public void load(Map<String, String> props) {
@@ -96,6 +95,7 @@ public abstract class Config {
 
     /**
      * Set a single property
+     *
      * @param key
      * @param value
      */
@@ -137,10 +137,9 @@ public abstract class Config {
         return "true".equalsIgnoreCase(value);
     }
 
-    /**
-     * @return the currently used Rest URL
-     */
-    public abstract String getRestUrl();
+//    public abstract String getRestUrlFromClient();
+//
+//    public abstract String getRestUrlFromServer();
 
     /**
      * @return the REST public URL if it has been overridden from properties
@@ -195,15 +194,15 @@ public abstract class Config {
     private static final String ABOUT = "about";
 
     private static final String d_ABOUT = "<h3>ProActive @application_name@ Portal</h3>" +
-        "Version: @version@" + "<br><br>" +
-        "Copyright (C) 1997-" + getCurrentYear() + " INRIA/University of Nice-Sophia Antipolis/ActiveEon<br><br>" +
-        "Visit <a target='_blank' href='http://proactive.inria.fr/'>http://proactive.inria.fr/</a> " +
-        "and <a target='_blank' href='http://www.activeeon.com/'>http://www.activeeon.com/</a><br>" +
-        "Contact: +33 (0)9 88 777 660, <a target='_blank' href='mailto:contact@activeeon.com'>contact@activeeon.com</a>" +
-        "<br><br><br>" + "<table style='color:#404040'>" +
-        "<tr><td>REST server</td><td>@rest_public_url@</td></tr>" +
-        "<tr><td>REST version</td><td>@rest_version@</td></tr>" +
-        "<tr><td> @application_name@ version</td><td>@application_version@</td></tr>" + "</table>";
+            "Version: @version@" + "<br><br>" +
+            "Copyright (C) 1997-" + getCurrentYear() + " INRIA/University of Nice-Sophia Antipolis/ActiveEon<br><br>" +
+            "Visit <a target='_blank' href='http://proactive.inria.fr/'>http://proactive.inria.fr/</a> " +
+            "and <a target='_blank' href='http://www.activeeon.com/'>http://www.activeeon.com/</a><br>" +
+            "Contact: +33 (0)9 88 777 660, <a target='_blank' href='mailto:contact@activeeon.com'>contact@activeeon.com</a>" +
+            "<br><br><br>" + "<table style='color:#404040'>" +
+            "<tr><td>REST server</td><td>@rest_public_url@</td></tr>" +
+            "<tr><td>REST version</td><td>@rest_version@</td></tr>" +
+            "<tr><td> @application_name@ version</td><td>@application_version@</td></tr>" + "</table>";
 
     private void setCommonDefaults() {
         properties.put(ABOUT, d_ABOUT);
@@ -211,7 +210,8 @@ public abstract class Config {
 
     private static String getCurrentYear() {
         DefaultDateTimeFormatInfo info = new DefaultDateTimeFormatInfo();
-        DateTimeFormat dateTimeFormat = new DateTimeFormat("yyyy", info) {};
+        DateTimeFormat dateTimeFormat = new DateTimeFormat("yyyy", info) {
+        };
         return dateTimeFormat.format(new Date());
     }
 

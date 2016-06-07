@@ -268,7 +268,7 @@ public class RMController extends Controller implements UncaughtExceptionHandler
         this.localSessionNum = "" + System.currentTimeMillis() + "_" + Random.nextInt();
         Cookies.setCookie(LOCAL_SESSION_COOKIE, this.localSessionNum);
 
-        LogModel.getInstance().logMessage("Connected to " + Config.get().getRestUrl() + lstr + " (sessionId=" +
+        LogModel.getInstance().logMessage("Connected to " + ((RMConfig) Config.get()).getRestUrlFromClient() + lstr + " (sessionId=" +
             loginModel.getSessionId() + ")");
     }
 

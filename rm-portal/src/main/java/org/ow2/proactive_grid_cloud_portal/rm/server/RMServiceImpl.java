@@ -152,7 +152,7 @@ public class RMServiceImpl extends Service implements RMService {
      */
     public String login(String login, String pass, File cred, String ssh) throws RestServerException,
             ServiceException {
-        HttpPost httpPost = new HttpPost(RMConfig.get().getRestUrl() + "/rm/login");
+        HttpPost httpPost = new HttpPost(((org.ow2.proactive_grid_cloud_portal.rm.server.RMConfig) RMConfig.get()).getRestUrlFromServer(getThreadLocalRequest()) + "/rm/login");
 
         try {
             MultipartEntity entity;
@@ -224,7 +224,7 @@ public class RMServiceImpl extends Service implements RMService {
      */
     public String createCredentials(String login, String pass, String ssh) throws RestServerException,
             ServiceException {
-        HttpPost httpPost = new HttpPost(RMConfig.get().getRestUrl() + "/scheduler/createcredential");
+        HttpPost httpPost = new HttpPost(((org.ow2.proactive_grid_cloud_portal.rm.server.RMConfig) RMConfig.get()).getRestUrlFromServer(getThreadLocalRequest()) + "/scheduler/createcredential");
 
         try {
             MultipartEntity entity = createLoginPasswordSSHKeyMultipart(login, pass, ssh);
@@ -482,7 +482,7 @@ public class RMServiceImpl extends Service implements RMService {
                 new ResteasyClientBuilder().asyncExecutor(threadPool)
                         .httpEngine(new ApacheHttpClient4Engine(httpClient)).build();
 
-        ResteasyWebTarget target = client.target(RMConfig.get().getRestUrl());
+        ResteasyWebTarget target = client.target(((org.ow2.proactive_grid_cloud_portal.rm.server.RMConfig) RMConfig.get()).getRestUrlFromServer(getThreadLocalRequest()));
 
         return target.proxy(RestClient.class);
     }

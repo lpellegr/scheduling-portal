@@ -70,7 +70,6 @@ import org.ow2.proactive_grid_cloud_portal.scheduler.client.OutputMode;
 import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerService;
 import org.ow2.proactive_grid_cloud_portal.scheduler.client.SchedulerServiceAsync;
 import org.ow2.proactive_grid_cloud_portal.scheduler.client.controller.TasksCentricController;
-import org.ow2.proactive_grid_cloud_portal.scheduler.shared.SchedulerConfig;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -144,7 +143,7 @@ public class SchedulerServiceImpl extends Service implements SchedulerService {
      * @throws ServiceException
      */
     public String submitXMLFile(String sessionId, File file) throws RestServerException, ServiceException {
-        HttpPost method = new HttpPost(SchedulerConfig.get().getRestUrl() + "/scheduler/submit");
+        HttpPost method = new HttpPost(((SchedulerConfig) SchedulerConfig.get()).getRestUrlFromServer(getThreadLocalRequest()) + "/scheduler/submit");
         method.addHeader("sessionId", sessionId);
 
         boolean isJar = isJarFile(file);
@@ -324,7 +323,7 @@ public class SchedulerServiceImpl extends Service implements SchedulerService {
     @Override
     public String login(String login, String pass, File cred, String ssh) throws RestServerException,
             ServiceException {
-        HttpPost method = new HttpPost(SchedulerConfig.get().getRestUrl() + "/scheduler/login");
+        HttpPost method = new HttpPost(((SchedulerConfig) SchedulerConfig.get()).getRestUrlFromServer(getThreadLocalRequest()) + "/scheduler/login");
 
         try {
             MultipartEntity entity;
@@ -388,7 +387,7 @@ public class SchedulerServiceImpl extends Service implements SchedulerService {
     @Override
     public String createCredentials(String login, String pass, String ssh) throws RestServerException,
             ServiceException {
-        HttpPost method = new HttpPost(SchedulerConfig.get().getRestUrl() + "/scheduler/createcredential");
+        HttpPost method = new HttpPost(((SchedulerConfig) SchedulerConfig.get()).getRestUrlFromServer(getThreadLocalRequest()) + "/scheduler/createcredential");
 
         try {
             MultipartEntity entity = createLoginPasswordSSHKeyMultipart(login, pass, ssh);
@@ -1166,7 +1165,7 @@ public class SchedulerServiceImpl extends Service implements SchedulerService {
         ResteasyClient client =
                 new ResteasyClientBuilder().asyncExecutor(threadPool)
                         .httpEngine(new ApacheHttpClient4Engine(httpClient)).build();
-        ResteasyWebTarget target = client.target(SchedulerConfig.get().getRestUrl());
+        ResteasyWebTarget target = client.target(((SchedulerConfig) SchedulerConfig.get()).getRestUrlFromServer(getThreadLocalRequest()));
 
         return target.proxy(RestClient.class);
     }

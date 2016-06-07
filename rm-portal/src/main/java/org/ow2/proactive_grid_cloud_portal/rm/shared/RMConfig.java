@@ -143,16 +143,33 @@ public class RMConfig extends Config {
         return "Resource Manager";
     }
 
-    @Override
-    public String getRestUrl() {
-        return properties.get(REST_URL);
+//    @Override
+    public String getRestUrlFromClient() {
+        String restUrlFromProperties = properties.get(REST_URL);
+
+        // GWT.getHostPageBaseUrl()
+
+        if (restUrlFromProperties == null) {
+            String protocol = com.google.gwt.user.client.Window.Location.getProtocol();
+            String port = com.google.gwt.user.client.Window.Location.getPort();
+            String host = com.google.gwt.user.client.Window.Location.getHost();
+            return protocol + "://" + host + ":" + port + "/rest";
+        } else if (restUrlFromProperties.startsWith(".")
+                || restUrlFromProperties.startsWith("..")) {
+            String protocol = com.google.gwt.user.client.Window.Location.getProtocol();
+            String port = com.google.gwt.user.client.Window.Location.getPort();
+            String host = com.google.gwt.user.client.Window.Location.getHost();
+            return protocol + "://" + host + ":" + port + "/rest/" + restUrlFromProperties;
+        } else {
+            return restUrlFromProperties;
+        }
     }
 
     @Override
     protected String getRestPublicUrlIfDefinedOrOverridden() {
         String restPublicUrl = properties.get(REST_PUBLIC_URL);
-        if ((restPublicUrl == null || restPublicUrl.isEmpty()) && !getRestUrl().equals(d_REST_URL)) {
-            return getRestUrl();
+        if ((restPublicUrl == null || restPublicUrl.isEmpty()) && !getRestUrlFromClient().equals(d_REST_URL)) {
+            return getRestUrlFromClient();
         }
         return restPublicUrl;
     }
